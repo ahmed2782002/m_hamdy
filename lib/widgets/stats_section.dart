@@ -4,9 +4,17 @@ import '../portfolio_copy.dart';
 import 'portfolio_ui.dart';
 
 class StatsSection extends StatelessWidget {
-  const StatsSection({super.key, required this.copy, required this.compact});
+  const StatsSection({
+    super.key,
+    required this.copy,
+    required this.compact,
+    required this.onInstagram,
+    required this.onTikTok,
+  });
   final PortfolioCopy copy;
   final bool compact;
+  final VoidCallback onInstagram;
+  final VoidCallback onTikTok;
 
   @override
   Widget build(BuildContext context) => Center(
@@ -30,6 +38,27 @@ class StatsSection extends StatelessWidget {
               ),
             ),
           ),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              _socialButton(
+                context,
+                label: copy.instagram,
+                icon: Icons.camera_alt_rounded,
+                color: portfolioPink,
+                onTap: onInstagram,
+              ),
+              _socialButton(
+                context,
+                label: copy.tiktok,
+                icon: Icons.music_note_rounded,
+                color: portfolioCyan,
+                onTap: onTikTok,
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -40,7 +69,7 @@ class StatsSection extends StatelessWidget {
             children: [
               _stat(
                 context,
-                '8K+',
+                '5.8K',
                 copy.instagram,
                 copy.followers,
                 portfolioOrange,
@@ -54,12 +83,12 @@ class StatsSection extends StatelessWidget {
               ),
               _stat(
                 context,
-                '20K+',
+                '19K',
                 copy.tiktok,
                 copy.followers,
                 portfolioLime,
               ),
-              _stat(context, '275K', copy.tiktok, copy.likes, portfolioCyan),
+              _stat(context, '250K', copy.tiktok, copy.likes, portfolioCyan),
             ],
           ),
           const SizedBox(height: 12),
@@ -89,6 +118,43 @@ class StatsSection extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    ),
+  );
+
+  Widget _socialButton(
+    BuildContext context, {
+    required String label,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) => Material(
+    color: PortfolioPalette.panel(context),
+    borderRadius: BorderRadius.circular(24),
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(24),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: color.withOpacity(.55)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 18, color: color),
+            const SizedBox(width: 7),
+            Text(
+              label,
+              style: TextStyle(
+                color: PortfolioPalette.text(context),
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );

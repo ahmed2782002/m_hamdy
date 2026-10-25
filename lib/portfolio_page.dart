@@ -57,6 +57,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
   void _email() =>
       html.AnchorElement(href: 'mailto:mrmody572002@gmail.com').click();
 
+  void _openInstagram() => html.window.open(
+    'https://www.instagram.com/quran_k.7229?exln=MXdrODZiN3l3Z2Rjbw==',
+    '_blank',
+  );
+
+  void _openTikTok() => html.window.open(
+    'https://www.tiktok.com/@mody_5577?_r=1&_t=ZS-9Ar7lttH9Zk',
+    '_blank',
+  );
+
   void _downloadCv() {
     html.AnchorElement(href: 'assets/asstes/CV_English_260925_235303.pdf')
       ..download = 'Mahmoud_Hamdy_Agamy_CV.pdf'
@@ -151,7 +161,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: StatsSection(copy: copy, compact: compact),
+                child: StatsSection(
+                  copy: copy,
+                  compact: compact,
+                  onInstagram: _openInstagram,
+                  onTikTok: _openTikTok,
+                ),
               ),
               SliverToBoxAdapter(
                 key: _worksKey,
@@ -184,7 +199,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           runSpacing: 8,
                           children: [
                             Text(
-                              '01562340729',
+                              '0545590706',
                               style: TextStyle(
                                 color: PortfolioPalette.muted(context),
                                 fontSize: 12,
