@@ -36,6 +36,37 @@ class PortfolioCopy {
   String get worksIntro =>
       en ? 'Tap any video to watch.' : 'اضغط على أي فيديو لمشاهدته.';
   String get watch => en ? 'WATCH VIDEO' : 'شاهد الفيديو';
+  String get aiVideosEyebrow =>
+      en ? 'AI VIDEO CREATION' : 'فيديوهات بالذكاء الاصطناعي';
+  String get aiVideosTitle => en ? 'AI videos' : 'فيديوهات AI';
+  String get aiVideosIntro => en
+      ? 'A selection of videos I created with AI tools.'
+      : 'مجموعة من الفيديوهات التي أنشأتها باستخدام أدوات الذكاء الاصطناعي.';
+  List<String> get aiVideoTitles => en
+      ? [
+          'Gemini AI Video',
+          'AI Video 2',
+          'AI Video 3',
+          'AI Video 4',
+          'AI Video 5',
+        ]
+      : [
+          'فيديو Gemini AI',
+          'فيديو AI ٢',
+          'فيديو AI ٣',
+          'فيديو AI ٤',
+          'فيديو AI ٥',
+        ];
+  List<String> get aiVideoDescriptions => List.filled(
+    5,
+    en
+        ? 'An original AI-generated video created as part of my creative work.'
+        : 'فيديو إبداعي أنشأته باستخدام أدوات الذكاء الاصطناعي.',
+  );
+
+  String get previousVideo => en ? 'Previous video' : 'الفيديو السابق';
+  String get nextVideo => en ? 'Next video' : 'الفيديو التالي';
+  String get closeVideo => en ? 'Close video' : 'إغلاق الفيديو';
   List<String> get videoTitles => en
       ? [
           'Visual Storytelling',

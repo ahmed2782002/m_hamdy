@@ -60,6 +60,7 @@ flutter:
   assets:
     - asstes/CV_English_260925_235303.pdf
     - asstes/my image/
+    - asstes/ai_videos/
 
 fonts:
       - family: IBMPlexSansArabic

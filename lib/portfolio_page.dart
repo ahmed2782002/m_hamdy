@@ -37,6 +37,17 @@ class _PortfolioPageState extends State<PortfolioPage> {
     PortfolioVideo.drive('15yyHIZrC_vgXEjMvbYCmmVfq-_CcuOiC', portfolioOrange),
     PortfolioVideo.drive('1GYrWSGvVpQ6PWD4csbefZP6uBN_7WsKq', portfolioCyan),
   ];
+  final _aiVideos = const [
+    PortfolioVideo.asset(
+      'asstes/ai_videos/gemini_generated_video_341f7387.mp4',
+      portfolioOrange,
+    ),
+    PortfolioVideo.asset('asstes/ai_videos/IMG_0855 (1).MP4', portfolioPink),
+    PortfolioVideo.asset('asstes/ai_videos/IMG_1115.MP4', portfolioCyan),
+    PortfolioVideo.asset('asstes/ai_videos/IMG_1116.MP4', portfolioLime),
+    PortfolioVideo.asset('asstes/ai_videos/IMG_1117.MP4', portfolioOrange),
+  ];
+  List<PortfolioVideo> get _allVideos => [..._videos, ..._aiVideos];
 
   void _scrollTo(String section) {
     final key = switch (section) {
@@ -73,9 +84,20 @@ class _PortfolioPageState extends State<PortfolioPage> {
       ..click();
   }
 
-  void _playVideo(PortfolioVideo video) {
+  String _registerVideoPlayer(PortfolioVideo video) {
     final id = 'portfolio-video-${DateTime.now().microsecondsSinceEpoch}';
     ui.platformViewRegistry.registerViewFactory(id, (int viewId) {
+      if (video.assetPath != null) {
+        return html.VideoElement()
+          ..src = video.assetPath!
+          ..controls = true
+          ..autoplay = true
+          ..preload = 'metadata'
+          ..setAttribute('playsinline', 'true')
+          ..style.width = '100%'
+          ..style.height = '100%'
+          ..style.backgroundColor = '#080812';
+      }
       if (video.driveId != null || video.youtubeId != null) {
         return html.IFrameElement()
           ..src = video.youtubeId != null
@@ -90,28 +112,107 @@ class _PortfolioPageState extends State<PortfolioPage> {
       }
       throw StateError('Unsupported video source');
     });
+    return id;
+  }
+
+  void _playVideo(PortfolioVideo video) {
+    final copy = PortfolioCopy(_english);
+    var selectedIndex = _allVideos.indexOf(video);
+    var viewType = _registerVideoPlayer(video);
     showDialog<void>(
       context: context,
       barrierColor: Colors.black87,
-      builder: (_) => Dialog(
-        backgroundColor: widget.isLight
-            ? const Color(0xFFF7F5FB)
-            : const Color(0xFF111222),
-        insetPadding: const EdgeInsets.all(20),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Stack(
-            children: [
-              HtmlElementView(viewType: id),
-              Positioned(
-                top: 4,
-                left: 4,
-                child: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close),
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => Dialog(
+          backgroundColor: widget.isLight
+              ? const Color(0xFFF7F5FB)
+              : const Color(0xFF111222),
+          insetPadding: const EdgeInsets.all(20),
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: HtmlElementView(
+                    key: ValueKey(viewType),
+                    viewType: viewType,
+                  ),
                 ),
-              ),
-            ],
+                Positioned(
+                  top: 4,
+                  right: 4,
+                  child: IconButton(
+                    tooltip: copy.closeVideo,
+                    onPressed: () => Navigator.pop(dialogContext),
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.black54,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 4,
+                  top: 0,
+                  bottom: 0,
+                  child: Center(
+                    child: IconButton.filled(
+                      tooltip: copy.previousVideo,
+                      onPressed: selectedIndex == 0
+                          ? null
+                          : () => setDialogState(() {
+                              selectedIndex--;
+                              viewType = _registerVideoPlayer(
+                                _allVideos[selectedIndex],
+                              );
+                            }),
+                      icon: const Icon(Icons.chevron_left_rounded),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 4,
+                  top: 0,
+                  bottom: 0,
+                  child: Center(
+                    child: IconButton.filled(
+                      tooltip: copy.nextVideo,
+                      onPressed: selectedIndex == _allVideos.length - 1
+                          ? null
+                          : () => setDialogState(() {
+                              selectedIndex++;
+                              viewType = _registerVideoPlayer(
+                                _allVideos[selectedIndex],
+                              );
+                            }),
+                      icon: const Icon(Icons.chevron_right_rounded),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 10,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: const Color(0xA6000000),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 5,
+                        ),
+                        child: Text(
+                          '${selectedIndex + 1} / ${_allVideos.length}',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -174,6 +275,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   copy: copy,
                   compact: compact,
                   videos: _videos,
+                  aiVideos: _aiVideos,
                   onPlay: _playVideo,
                 ),
               ),

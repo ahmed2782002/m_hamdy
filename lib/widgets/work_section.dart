@@ -7,21 +7,34 @@ import '../portfolio_copy.dart';
 import 'portfolio_ui.dart';
 
 final Set<String> _registeredRemoteThumbnailViews = {};
+final Set<String> _registeredAssetThumbnailViews = {};
 
 class PortfolioVideo {
   const PortfolioVideo.youtube(String id, this.color)
     : youtubeId = id,
-      driveId = null;
+      driveId = null,
+      assetPath = null;
   const PortfolioVideo.drive(String id, this.color)
     : youtubeId = null,
-      driveId = id;
+      driveId = id,
+      assetPath = null;
+  const PortfolioVideo.asset(this.assetPath, this.color)
+    : youtubeId = null,
+      driveId = null;
   final Color color;
   final String? youtubeId;
   final String? driveId;
+  final String? assetPath;
 
-  String get thumbnail => youtubeId != null
-      ? 'https://img.youtube.com/vi/$youtubeId/hqdefault.jpg'
-      : 'https://drive.google.com/thumbnail?id=$driveId&sz=w1000';
+  String get thumbnail {
+    if (youtubeId != null) {
+      return 'https://img.youtube.com/vi/$youtubeId/hqdefault.jpg';
+    }
+    if (driveId != null) {
+      return 'https://drive.google.com/thumbnail?id=$driveId&sz=w1000';
+    }
+    return '';
+  }
 }
 
 class WorkSection extends StatelessWidget {
@@ -30,11 +43,13 @@ class WorkSection extends StatelessWidget {
     required this.copy,
     required this.compact,
     required this.videos,
+    required this.aiVideos,
     required this.onPlay,
   });
   final PortfolioCopy copy;
   final bool compact;
   final List<PortfolioVideo> videos;
+  final List<PortfolioVideo> aiVideos;
   final ValueChanged<PortfolioVideo> onPlay;
 
   @override
@@ -72,6 +87,31 @@ class WorkSection extends StatelessWidget {
               copy.videoTitles[i],
               copy.videoDescriptions[i],
               () => onPlay(videos[i]),
+            ),
+          ),
+          const SizedBox(height: 52),
+          SectionHeading(
+            eyebrow: copy.aiVideosEyebrow,
+            title: copy.aiVideosTitle,
+            description: copy.aiVideosIntro,
+          ),
+          const SizedBox(height: 28),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: aiVideos.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: compact ? 1 : 3,
+              crossAxisSpacing: 18,
+              mainAxisSpacing: 18,
+              childAspectRatio: compact ? 1.28 : 1.13,
+            ),
+            itemBuilder: (context, i) => _videoCard(
+              context,
+              aiVideos[i],
+              copy.aiVideoTitles[i],
+              copy.aiVideoDescriptions[i],
+              () => onPlay(aiVideos[i]),
             ),
           ),
         ],
@@ -222,8 +262,31 @@ class WorkSection extends StatelessWidget {
                 ),
               ),
             );
+    if (video.assetPath != null) {
+      final viewType = 'portfolio-local-thumbnail-${video.assetPath}';
+      if (_registeredAssetThumbnailViews.add(viewType)) {
+        ui.platformViewRegistry.registerViewFactory(viewType, (int viewId) {
+          final preview = html.VideoElement()
+            ..src = video.assetPath!
+            ..muted = true
+            ..preload = 'metadata'
+            ..style.width = '100%'
+            ..style.height = '100%'
+            ..style.objectFit = 'cover'
+            ..style.backgroundColor = _toCssColor(video.color);
+          preview.onLoadedMetadata.listen((_) {
+            if (preview.duration.isFinite && preview.duration > 0) {
+              preview.currentTime = preview.duration * .12;
+            }
+          });
+          return preview;
+        });
+      }
+      return HtmlElementView(viewType: viewType);
+    }
     if (video.youtubeId != null || video.driveId != null) {
-      final viewType = 'portfolio-remote-thumbnail-${video.youtubeId ?? video.driveId}';
+      final viewType =
+          'portfolio-remote-thumbnail-${video.youtubeId ?? video.driveId}';
       if (_registeredRemoteThumbnailViews.add(viewType)) {
         ui.platformViewRegistry.registerViewFactory(viewType, (int viewId) {
           final container = html.DivElement()
