@@ -267,7 +267,7 @@ class WorkSection extends StatelessWidget {
       if (_registeredAssetThumbnailViews.add(viewType)) {
         ui.platformViewRegistry.registerViewFactory(viewType, (int viewId) {
           final preview = html.VideoElement()
-            ..src = video.assetPath!
+            ..src = 'assets/${video.assetPath!}'
             ..muted = true
             ..preload = 'metadata'
             ..style.width = '100%'

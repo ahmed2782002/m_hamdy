@@ -89,7 +89,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
     ui.platformViewRegistry.registerViewFactory(id, (int viewId) {
       if (video.assetPath != null) {
         return html.VideoElement()
-          ..src = video.assetPath!
+          ..src = 'assets/${video.assetPath!}'
           ..controls = true
           ..autoplay = true
           ..preload = 'metadata'
