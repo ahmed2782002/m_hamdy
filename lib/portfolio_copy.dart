@@ -29,8 +29,8 @@ class PortfolioCopy {
   String get topVideo => en ? 'Top video views' : 'أعلى مشاهدات لفيديو';
   String get likes => en ? 'total likes' : 'إجمالي الإعجابات';
   String get tiktokDetail => en
-      ? 'Three videos passed 500K views, and two more passed 250K.'
-      : '٣ فيديوهات تجاوزت ٥٠٠ ألف مشاهدة، وفيديوهان تجاوزا ٢٥٠ ألفًا.';
+      ? 'Some of my TikTok videos passed 500K views, and others passed 250K.'
+      : 'بعض فيديوهاتي على تيك توك تخطّت ٥٠٠ ألف مشاهدة، وأخرى تخطّت ٢٥٠ ألف مشاهدة.';
   String get worksEyebrow => en ? 'SELECTED VIDEOS' : 'مختارات من أعمالي';
   String get worksTitle => en ? 'Stories in motion' : 'من الفكرة إلى الشاشة';
   String get worksIntro =>
