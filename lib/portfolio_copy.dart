@@ -8,7 +8,7 @@ class PortfolioCopy {
       ? 'CONTENT CREATOR • VIDEOGRAPHER • EDITOR'
       : 'صانع محتوى • مصور • محرر فيديو';
   String get headline =>
-      en ? 'Stories worth\nwatching.' : 'أحكي قصصًا\nتستحق أن تُشاهد.';
+      en ? 'Stories worth\nwatching.' : 'أصنع محتوى\nيستحق المشاهدة.';
   String get intro => en
       ? 'I turn ideas and moments into visual content that catches attention and leaves an impression. From filming to editing, every detail serves the story.'
       : 'أحوّل الأفكار واللحظات إلى محتوى بصري يلفت الانتباه ويترك أثرًا. من التصوير إلى المونتاج، أعمل على كل تفصيلة لتصل الحكاية.';
@@ -21,8 +21,8 @@ class PortfolioCopy {
   String get location =>
       en ? 'Al-Kharj, Riyadh, Saudi Arabia' : 'الخرج، الرياض، السعودية';
   String get available => en ? 'Available for freelance' : 'متاح للعمل الحر';
-  String get statsEyebrow => en ? 'GROWING COMMUNITIES' : 'حضور رقمي متنامٍ';
-  String get statsTitle => en ? 'Content that connects' : 'محتوى يصل للناس';
+  String get statsEyebrow => en ? 'GROWING COMMUNITIES' : 'أرقامي على السوشيال ميديا';
+  String get statsTitle => en ? 'Content that connects' : 'محتوى يصل لجمهور أكبر';
   String get instagram => 'Instagram';
   String get tiktok => 'TikTok';
   String get followers => en ? 'followers' : 'متابع';
@@ -35,6 +35,14 @@ class PortfolioCopy {
   String get worksTitle => en ? 'Stories in motion' : 'من الفكرة إلى الشاشة';
   String get worksIntro =>
       en ? 'Tap any video to watch.' : 'اضغط على أي فيديو لمشاهدته.';
+  String get designWorksEyebrow =>
+      en ? 'BRAND & AD DESIGN' : 'تصميم إعلاني وهوية بصرية';
+  String get designWorksTitle =>
+      en ? 'Design work' : 'تصميمات من أعمالي';
+  String get designWorksIntro => en
+      ? 'A few brand and advertising designs I created.'
+      : 'نماذج من تصميماتي الإعلانية والهويات البصرية.';
+  String get viewDesign => en ? 'View design' : 'عرض التصميم';
   String get watch => en ? 'WATCH VIDEO' : 'شاهد الفيديو';
   String get aiVideosEyebrow =>
       en ? 'AI VIDEO CREATION' : 'فيديوهات بالذكاء الاصطناعي';

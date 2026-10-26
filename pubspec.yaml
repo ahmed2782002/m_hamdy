@@ -61,6 +61,7 @@ flutter:
     - asstes/CV_English_260925_235303.pdf
     - asstes/my image/
     - asstes/ai_videos/
+    - asstes/designs/
 
 fonts:
       - family: IBMPlexSansArabic

@@ -9,6 +9,38 @@ import 'portfolio_ui.dart';
 final Set<String> _registeredRemoteThumbnailViews = {};
 final Set<String> _registeredAssetThumbnailViews = {};
 
+class PortfolioDesign {
+  const PortfolioDesign({
+    required this.assetPath,
+    required this.titleAr,
+    required this.titleEn,
+  });
+
+  final String assetPath;
+  final String titleAr;
+  final String titleEn;
+
+  String title(bool en) => en ? titleEn : titleAr;
+}
+
+const portfolioDesigns = [
+  PortfolioDesign(
+    assetPath: 'asstes/designs/fried-chicken-promo.jpeg',
+    titleAr: 'إعلان مطعم فرايد تشيكن',
+    titleEn: 'Fried Chicken advertisement',
+  ),
+  PortfolioDesign(
+    assetPath: 'asstes/designs/mokhtara-brand-label.jpeg',
+    titleAr: 'ملصق وهوية بصرية لمختارة لك ولك',
+    titleEn: 'Mokhtara brand label',
+  ),
+  PortfolioDesign(
+    assetPath: 'asstes/designs/hayat-steel-banner.jpeg',
+    titleAr: 'بانر شركة حياة ستيل المحدودة',
+    titleEn: 'Hayat Steel company banner',
+  ),
+];
+
 class PortfolioVideo {
   const PortfolioVideo.youtube(String id, this.color)
     : youtubeId = id,
@@ -91,6 +123,28 @@ class WorkSection extends StatelessWidget {
           ),
           const SizedBox(height: 52),
           SectionHeading(
+            eyebrow: copy.designWorksEyebrow,
+            title: copy.designWorksTitle,
+            description: copy.designWorksIntro,
+          ),
+          const SizedBox(height: 28),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: portfolioDesigns.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: compact ? 1 : 3,
+              crossAxisSpacing: 18,
+              mainAxisSpacing: 18,
+              childAspectRatio: compact ? 1.05 : 1.02,
+            ),
+            itemBuilder: (context, i) => _designCard(
+              context,
+              portfolioDesigns[i],
+            ),
+          ),
+          const SizedBox(height: 52),
+          SectionHeading(
             eyebrow: copy.aiVideosEyebrow,
             title: copy.aiVideosTitle,
             description: copy.aiVideosIntro,
@@ -118,6 +172,96 @@ class WorkSection extends StatelessWidget {
       ),
     ),
   );
+
+  Widget _designCard(BuildContext context, PortfolioDesign design) =>
+      InkWell(
+        onTap: () => showDialog<void>(
+          context: context,
+          builder: (dialogContext) => Dialog(
+            backgroundColor: PortfolioPalette.panel(context),
+            insetPadding: const EdgeInsets.all(20),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: InteractiveViewer(
+                    child: Image.asset(
+                      design.assetPath,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => const Icon(
+                        Icons.broken_image_outlined,
+                        size: 64,
+                      ),
+                    ),
+                  ),
+                ),
+                PositionedDirectional(
+                  top: 4,
+                  end: 4,
+                  child: IconButton(
+                    tooltip: copy.en ? 'Close' : 'إغلاق',
+                    onPressed: () => Navigator.pop(dialogContext),
+                    icon: const Icon(Icons.close_rounded),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        borderRadius: BorderRadius.circular(22),
+        child: Container(
+          decoration: BoxDecoration(
+            color: PortfolioPalette.panel(context),
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(color: PortfolioPalette.border(context)),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  color: const Color(0xFF171522),
+                  padding: const EdgeInsets.all(10),
+                  child: Image.asset(
+                    design.assetPath,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.broken_image_outlined,
+                      size: 64,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(17, 14, 17, 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        design.title(copy.en),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Icon(
+                      Icons.zoom_in_rounded,
+                      size: 20,
+                      color: portfolioOrange,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 
   Widget _videoCard(
     BuildContext context,
