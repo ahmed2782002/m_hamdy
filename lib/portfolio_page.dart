@@ -42,10 +42,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
       'asstes/ai_videos/gemini_generated_video_341f7387.mp4',
       portfolioOrange,
     ),
-    PortfolioVideo.asset('asstes/ai_videos/IMG_0855 (1).MP4', portfolioPink),
-    PortfolioVideo.asset('asstes/ai_videos/IMG_1115.MP4', portfolioCyan),
-    PortfolioVideo.asset('asstes/ai_videos/IMG_1116.MP4', portfolioLime),
-    PortfolioVideo.asset('asstes/ai_videos/IMG_1117.MP4', portfolioOrange),
+    PortfolioVideo.asset('asstes/ai_videos/ai_video_2.mp4', portfolioPink),
+    PortfolioVideo.asset('asstes/ai_videos/ai_video_3.mp4', portfolioCyan),
+    PortfolioVideo.asset('asstes/ai_videos/ai_video_4.mp4', portfolioLime),
+    PortfolioVideo.asset('asstes/ai_videos/ai_video_5.mp4', portfolioOrange),
   ];
   List<PortfolioVideo> get _allVideos => [..._videos, ..._aiVideos];
 
