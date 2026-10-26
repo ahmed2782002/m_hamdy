@@ -104,8 +104,8 @@ class PortfolioCopy {
   String get aboutEyebrow => en ? 'A LITTLE ABOUT ME' : 'حكاية وخبرة';
   String get aboutTitle => en ? 'Meet Mahmoud' : 'عن محمود';
   String get aboutText => en
-      ? 'A Media and Public Relations graduate, passionate about visual storytelling. I create end-to-end content, from shaping the idea and filming to editing and delivery.'
-      : 'خريج إعلام وعلاقات عامة، شغوف بصناعة الصورة والكلمة. أعمل على إنتاج محتوى بصري متكامل، من كتابة الفكرة وتصويرها إلى المونتاج والتسليم.';
+      ? 'A Media and Public Relations graduate, passionate about creating social media content in different ways and telling stories through visuals. I create end-to-end content, from shaping the idea and filming to editing and delivery.'
+      : 'خريج إعلام وعلاقات عامة، شغوف بصناعة محتوى السوشيال ميديا بطرق مختلفة، وصناعة الصورة والكلمة. أعمل على إنتاج محتوى بصري متكامل، من كتابة الفكرة وتصويرها إلى المونتاج والتسليم.';
   String get education => en
       ? "Bachelor's Degree in Media and Public Relations • 2025 • Very Good"
       : 'بكالوريوس إعلام وعلاقات عامة • ٢٠٢٥ • تقدير جيد جدًا';

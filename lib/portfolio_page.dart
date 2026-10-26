@@ -69,7 +69,19 @@ class _PortfolioPageState extends State<PortfolioPage> {
       html.AnchorElement(href: 'mailto:mrmody572002@gmail.com').click();
 
   void _openInstagram() => html.window.open(
-    'https://www.instagram.com/quran_k.7229?exln=MXdrODZiN3l3Z2Rjbw==',
+    'https://www.instagram.com/mody_xx57?obrf=MXVxeWxkMmU5dWloaQ%3D%3D&utm_source=qr',
+    '_blank',
+  );
+
+  void _openWhatsApp() => html.window.open('https://wa.me/201550055904', '_blank');
+
+  void _openFacebook() => html.window.open(
+    'https://www.facebook.com/share/1EzFoDoEDD/?mibextid=wwXIfr',
+    '_blank',
+  );
+
+  void _openTelegram() => html.window.open(
+    'https://t.me/Mahmoud_hamdi57',
     '_blank',
   );
 
@@ -291,6 +303,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       copy: copy,
                       compact: compact,
                       onEmail: _email,
+                      onWhatsApp: _openWhatsApp,
+                      onFacebook: _openFacebook,
+                      onTelegram: _openTelegram,
+                      onInstagram: _openInstagram,
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 30),
